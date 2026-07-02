@@ -14,3 +14,33 @@ def view_books():
     finally:
 
         session.close()
+
+
+def add_book(title, author, category, price, pages, edition, available_copies):
+
+    session = SessionLocal()
+
+    try:
+        new_book = Book(
+            title = title,
+            author = author,
+            category = category,
+            price = price,
+            pages = pages,
+            edition = edition,
+            available_copies = available_copies
+        )
+
+        session.add(new_book)
+
+        session.commit()
+
+        session.refresh(new_book)
+
+        return new_book
+    
+    finally:
+
+        session.close()
+
+

@@ -2,6 +2,7 @@ from sqlalchemy import String, Integer, DECIMAL
 from sqlalchemy.orm import Mapped, mapped_column
 from decimal import Decimal
 from datetime import date
+from sqlAlchemy import Date
 
 from database import Base
 
@@ -69,20 +70,35 @@ class Member(Base):
         String(15),
     )
 
-    membership_date: Mapped[date]
+    membership_date: Mapped[date] = mapped_column(
+        Date
+    )
 
 class IssuedBook(Base):
 
     __tablename__ = "issued_books"
 
-    issue_id: Mapped[int]
+    issue_id: Mapped[int] = mapped_column(
+        Integer,
+        primary_key = True
+    )
 
-    book_id: Mapped[int]
+    book_id: Mapped[int] = mapped_column(
+        Integer
+    )
 
-    member_id: Mapped[int]
+    member_id: Mapped[int] = mapped_column(
+        Integer
+    )
 
-    issue_date: Mapped[date]
+    issue_date: Mapped[date] = mapped_column(
+        Date
+    )
 
-    return_date: Mapped[date]
+    return_date: Mapped[date] = mapped_column(
+        Date
+    )
 
-    status: Mapped[str]
+    status: Mapped[str] = mapped_column(
+        String(50)
+    )

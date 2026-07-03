@@ -44,3 +44,65 @@ def add_book(title, author, category, price, pages, edition, available_copies):
         session.close()
 
 
+def update_book_price(title, new_price):
+
+    session = SessionLocal()
+
+    try:
+
+        book = session.query(Book).filter(
+            Book.title == title
+        ).first()
+
+        if book:
+
+            book.price = new_price
+
+            session.commit()
+
+            session.refresh(book)
+
+            return book
+        
+        return None
+    
+    except Exception:
+
+        session.rollback()
+
+        raise
+
+    finally:
+
+        session.close()
+
+
+def delete_book(title):
+
+    session = SessionLocal()
+
+    try:
+
+        book = session.query(Book).filter(
+            book.title == title
+        ).first()
+
+        if book:
+
+            session.delete(book)
+
+            session.commit()
+
+            return True
+    
+        return False
+
+    except Exception:
+
+        session.rollback()
+
+        raise
+
+    finally:
+
+        session.close()

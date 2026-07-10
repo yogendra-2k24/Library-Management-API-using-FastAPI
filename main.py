@@ -2,6 +2,7 @@ from database import SessionLocal
 from models import Book
 from crud import view_books, add_book
 from fastapi import FastAPI
+from schemas import BookCreate
 
 # This method is called from crud.py for viwing books
 
@@ -33,5 +34,7 @@ def get_book():
     return {"message": "List of Books"}
 
 @app.post("/books")
-def create_book():
-    return {"message": "Book Created Successfully"}
+def create_book(book: BookCreate):
+    return {"title": book.title,
+            "author": book.author,
+            "copies": book.copies}

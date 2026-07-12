@@ -32,9 +32,10 @@ def about():
 
 @app.get("/books")
 def get_book():
-    return {"message": "List of Books"}
+    books = crud.view_books()
+    return books
 
 @app.post("/books")
 def create_book(book: BookCreate):
-    
+
     return crud.add_book(book)

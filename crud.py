@@ -1,6 +1,7 @@
 from database import SessionLocal
 from models import Book, Member, IssuedBook
 from schemas import BookCreate
+from fastapi import HTTPException
 
 
 # For viewing the books
@@ -170,6 +171,29 @@ def issue_book(book_id, member_id):
 
         raise
 
+    finally:
+
+        session.close()
+
+def get_book(book_id: int):
+
+    session = SessionLocal()
+
+    try:
+
+        book = session.query(Book).filter( 
+            Book.id == book_id
+        ).first()
+
+        if book is None:
+
+            raise HTTPException(
+                status_code=404,
+                detail="Book Not Found"
+            )
+        
+        return book
+    
     finally:
 
         session.close()

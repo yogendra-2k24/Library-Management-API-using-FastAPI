@@ -36,4 +36,5 @@ def get_book():
 
 @app.post("/books")
 def create_book(book: BookCreate):
+    
     return crud.add_book(book)

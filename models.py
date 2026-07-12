@@ -83,7 +83,7 @@ class Member(Base):
         server_default=func.current_date()
     )
 
-    issued_books = relationship("IssuedBook", back_populates="meber")
+    issued_books = relationship("IssuedBook", back_populates="member")
 
 
 # Mapped issued_books Table

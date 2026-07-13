@@ -2,7 +2,7 @@ from database import SessionLocal
 from models import Book
 from crud import view_books, add_book
 from fastapi import FastAPI
-from schemas import BookCreate
+from schemas import BookCreate, BookResponse
 import crud
 
 # This method is called from crud.py for viwing books
@@ -30,7 +30,7 @@ def about():
         "message": "Library Management System Backend"
     }
 
-@app.get("/books")
+@app.get("/books", response_model=list[BookResponse])
 def get_book():
     books = crud.view_books()
     return books

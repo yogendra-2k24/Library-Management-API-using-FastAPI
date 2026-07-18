@@ -284,6 +284,8 @@ def filter_books(category: str):
 def get_books(
         category: str | None = None,
         min_price: float | None = None,
+        sort_by: str = "book_id",
+        order: str = "asc",
         skip: int = 0,
         limit: int = 10
 ):
@@ -300,6 +302,38 @@ def get_books(
         if min_price is not None:
 
             query = query.filter(Book.price >= min_price)
+
+        
+        valid_sort_fields = {
+            "book_id": Book.book_id,
+            "title": Book.title,
+            "price": Book.price,
+            "category": Book.category
+        }
+        
+        if sort_by not in valid_sort_fields:
+
+            raise HTTPException(
+                status_code=400,
+                detail="Invalid Sort Field"
+            )
+        
+        column = valid_sort_fields[sort_by]
+
+        if order == "asc":
+
+            query = query.order_by(column.asc())
+
+        elif order == "desc":
+
+            query = query.order_by(column.desc())
+
+        else:
+
+            raise HTTPException(
+                status_code=400,
+                detail="Order must be 'asc' or 'desc'"
+            )
 
         query = query.offset(skip)
 

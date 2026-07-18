@@ -35,10 +35,12 @@ def about():
 def get_books(
     category: str | None = None,
     min_price: float | None = None,
+    sort_by: str = "book_id",
+    order: str = "asc",
     skip: int = 0,
     limit: int = 10
 ):
-    return crud.get_books(category, min_price, skip, limit)
+    return crud.get_books(category, min_price, sort_by, order, skip, limit)
 
 
 @app.get("/books/filter", response_model=list[BookResponse])

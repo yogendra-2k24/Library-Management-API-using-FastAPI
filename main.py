@@ -1,9 +1,10 @@
-from database import SessionLocal
+from database import SessionLocal, get_db
 from models import Book
 from crud import view_books, add_book
-from fastapi import FastAPI
-from schemas import BookCreate, BookResponse
+from fastapi import FastAPI, Depends
+from schemas import BookCreate, BookResponse, UserCreate
 import crud
+from sqlalchemy.orm import Session
 
 # This method is called from crud.py for viwing books
 
@@ -68,3 +69,8 @@ def update_book(book_id: int, book_data: BookCreate):
 def delete_book(book_id: int):
 
     return crud.delete_book(book_id)
+
+
+@app.post("/register")
+def register(user: UserCreate, db: Session = Depends(get_db)):
+    return crud.create_user(db, user)

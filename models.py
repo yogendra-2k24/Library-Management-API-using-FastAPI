@@ -131,3 +131,15 @@ class IssuedBook(Base):
     book = relationship("Book", back_populates="issued_books")
 
     member = relationship("Member", back_populates="issued_books")
+
+
+class User(Base):
+    __tablename__ = "users"
+
+    user_id: Mapped[int] = mapped_column(Integer, autoincrement=True ,primary_key=True, index=True)
+
+    username: Mapped[str] = mapped_column(String(50), unique=True, nullable=False)
+
+    email: Mapped[str] = mapped_column(String(100), unique=True, nullable=False)
+
+    hashed_password: Mapped[str] = mapped_column(String(255), nullable=False)

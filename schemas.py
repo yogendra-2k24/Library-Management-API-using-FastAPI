@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 
 class BookCreate(BaseModel):
     title: str
@@ -22,3 +22,8 @@ class BookResponse(BaseModel):
     model_config = {
     "from_attributes": True
     }
+
+class UserCreate(BaseModel):
+    username: str
+    email: EmailStr
+    password: str

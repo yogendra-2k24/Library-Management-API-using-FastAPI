@@ -1,7 +1,8 @@
 from database import SessionLocal
-from models import Book, Member, IssuedBook
+from models import Book, Member, IssuedBook, User
 from schemas import BookCreate
 from fastapi import HTTPException
+from auth import hash_password
 
 
 # For viewing the books
@@ -346,3 +347,18 @@ def get_books(
     finally:
 
         session.close()
+
+
+def create_user(db, user):
+
+    db_user = User(
+        username = user.username,
+        email = user.email,
+        hashed_password=hash_password(user.password)
+    )
+
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+
+    return db_user

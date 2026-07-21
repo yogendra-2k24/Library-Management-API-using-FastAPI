@@ -4,6 +4,7 @@ import crud
 from models import User
 from sqlalchemy.orm import Session
 from datetime import datetime, timedelta, timezone
+from fastapi import HTTPException
 
 
 SECRET_KEY = "my_secret_key"
@@ -70,3 +71,18 @@ def verify_access_token(token: str):
         return None
     
     return user_id
+
+def get_current_user(token: str, db: Session):
+
+    user_id = verify_access_token(token)
+
+    user = db.query(User).filter(User.user_id == user_id).first()
+
+    if user is None:
+
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid Token"
+        )
+    
+    return user

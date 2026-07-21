@@ -98,7 +98,7 @@ def login(login_user: UserLogin, db: Session = Depends(get_db)):
     
     access_token = create_access_token(
         data = {
-            "sub": db_user.username
+            "sub": str(db_user.user_id)
         }
     )
 
